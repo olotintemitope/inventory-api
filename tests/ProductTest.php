@@ -42,4 +42,21 @@ class ProductTest extends TestCase
         $this->assertEquals($product->quantity, $jsonProduct['quantity']);
         $this->assertGreaterThan(0, count($jsonProduct));
     }
+
+    public function testCreateProduct()
+    {
+    	$category = factory(Laztopaz\Model\Category::class)->create();
+    	$products = factory(Laztopaz\Model\Category::class, 2)->create();
+
+        $response = $this->call('POST', '/v1/products', [
+        	'category' => $category->id,
+            'name' => 'TimeTable',
+            'price' => 200,
+            'quantity' => 1
+        ]);
+
+        $jsonProduct = json_decode($response->getContent(), true);
+
+        $this->assertGreaterThan(0, count($jsonProduct));
+    }
 }
