@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/v1/categories', 'CategoryController@getAllCategories');
+Route::post('/v1/categories', 'CategoryController@saveCategory');
 Route::get('/v1/categories/{id}', 'CategoryController@getCategory');
 Route::get('/v1/categories/{id}/products', 'CategoryController@getProductsByCategory');
 
