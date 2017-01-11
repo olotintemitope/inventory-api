@@ -11,21 +11,21 @@ class CategoryController extends Controller
 	{
 		$categories = Category::findAll();
 
-		if (!is_null($categories)) {
-			return response()->json($categories);
+		if ($categories->count()) {
+			return response()->json($categories, 200);
 		}
 
-		return response()->json(['message' => 'Categories Not Found']);
+		return response()->json(['message' => 'Categories Not Found'], 404);
 	}
 
 	public function getCategory($id)
 	{
 		$category = Category::FindById($id);
 
-		if (is_null($category)) {
-			return response()->json($category);
+		if ($category->count()) {
+			return response()->json($category, 200);
 		}
 
-		return response()->json(['message' => 'Category Not Found']);
+		return response()->json(['message' => 'Category Not Found'], 404);
 	}
 }
