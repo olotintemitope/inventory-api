@@ -50,4 +50,23 @@ class CategoryTest extends TestCase
 
         $this->assertGreaterThan(0, count($jsonProducts));
     }
+
+    public function testCreateCategory()
+    {
+        $category = factory(Laztopaz\Model\Category::class)->create();
+
+        $response = $this->call('POST', '/v1/categories', [
+            'name' => 'TimeTable',
+            'description' => 'This is a timetable category'
+        ]);
+
+        $jsonCategory = json_decode($response->getContent(), true);
+
+        print_r($jsonCategory); exit;
+
+        $this->assertEquals($category->id, $jsonCategory['id']);
+        $this->assertEquals($category->name, $jsonCategory['name']);
+        $this->assertEquals($category->description, $jsonCategory['description']);
+        $this->assertGreaterThan(0, count($jsonCategory));
+    }
 }
