@@ -18,7 +18,11 @@ class CategoryTesr extends TestCase
 
     public function testGetAllCategories()
     {
-        $response = $this->call('/v1/categories', 'GET')
-        dd(response);
+        factory(Laztopaz\Model\Category::class)->make();
+        $response = $this->call('GET', '/v1/categories');
+
+        $categories = json_decode($response->getContent(), true);
+
+        $this->assertGreaterThan(0, count($categories));
     }
 }
