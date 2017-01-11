@@ -25,4 +25,17 @@ class CategoryTesr extends TestCase
 
         $this->assertGreaterThan(0, count($categories));
     }
+
+    public function testGetASingleCategory()
+    {
+        $category = factory(Laztopaz\Model\Category::class)->create();
+        $response = $this->call('GET', '/v1/categories/'.$category->id);
+
+        $jsonCategory = json_decode($response->getContent(), true);
+
+        $this->assertEquals($category->id, $jsonCategory['id']);
+        $this->assertEquals($category->name, $jsonCategory['name']);
+        $this->assertEquals($category->description, $jsonCategory['description']);
+        $this->assertGreaterThan(0, count($jsonCategory));
+    }
 }
