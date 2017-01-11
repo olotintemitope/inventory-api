@@ -38,4 +38,16 @@ class CategoryTest extends TestCase
         $this->assertEquals($category->description, $jsonCategory['description']);
         $this->assertGreaterThan(0, count($jsonCategory));
     }
+
+    public function testGetAllProductsByCategory()
+    {
+        $category = factory(Laztopaz\Model\Category::class)->create();
+        $product = factory(Laztopaz\Model\Category::class)->create();
+
+        $response = $this->call('GET', '/v1/categories/'.$category->id.'/products');
+
+        $jsonProducts = json_decode($response->getContent(), true);
+
+        $this->assertGreaterThan(0, count($jsonProducts));
+    }
 }
