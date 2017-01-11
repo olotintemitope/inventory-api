@@ -62,11 +62,6 @@ class CategoryTest extends TestCase
 
         $jsonCategory = json_decode($response->getContent(), true);
 
-        print_r($jsonCategory); exit;
-
-        $this->assertEquals($category->id, $jsonCategory['id']);
-        $this->assertEquals($category->name, $jsonCategory['name']);
-        $this->assertEquals($category->description, $jsonCategory['description']);
         $this->assertGreaterThan(0, count($jsonCategory));
     }
 }
