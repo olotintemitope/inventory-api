@@ -20,7 +20,7 @@ class CategoryController extends Controller
 
     public function getCategory($id)
     {
-        $category = Category::FindById($id);
+        $category = Category::FindOneById($id);
 
         if ($category->count()) {
             return response()->json($category, 200);
