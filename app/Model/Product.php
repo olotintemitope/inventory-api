@@ -31,6 +31,6 @@ class Product extends Model
 	{
 		return $query
 		    ->orderBy('id', 'desc')
-		    ->paginate(20);
+		    ->get();
 	}
 }
