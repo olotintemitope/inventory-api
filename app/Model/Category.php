@@ -13,12 +13,12 @@ class Category extends Model
         return $this->hasMany('Laztopaz\Model\Product');
     }
 
-    public function scopeFindById($query, $catId)
-    {
-        return $query
-            ->where('id', $catId)
-            ->first();
-    }
+    public function scopeFindOneById($query, $id)
+	{
+		return $query
+		    ->where('id', $id)
+		    ->first();
+	}
 
     public function scopeFindAll($query)
     {
