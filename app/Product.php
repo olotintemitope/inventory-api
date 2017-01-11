@@ -19,4 +19,11 @@ class Product extends Model
 		    ->orderBy('id', 'asc')
 		    ->get();
 	}
+
+	public function scopeFindOneById($query, $id)
+	{
+		return $query
+		    ->where('id', $id)
+		    ->first();
+	}
 }
