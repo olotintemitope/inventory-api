@@ -4,6 +4,7 @@ namespace Laztopaz\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Laztopaz\Model\Product;
+use Laztopaz\Model\Category;
 
 class ProductController extends Controller
 {
@@ -27,5 +28,31 @@ class ProductController extends Controller
 		}
 
 		return response()->json(['message' => 'Product Not Found']);
+	}
+
+	public function saveProduct(Request $request)
+	{
+		if (
+			$request->has('name') && 
+			$request->has('price') && 
+			$request->has('quantity') &&
+			$request->has('category')
+		) {
+			$category = Category::FindOneById($request->has('category'));
+		    if ($category->count() > 0) {
+		    	$product = Product::Create([
+		    		'name' => $request->name,
+		    		'price' => $request->price,
+		    		'quantity' => $request->quantity,
+		    		'category_id' => $request->quantity,
+				]);
+
+				if ($product->count() > 0) {
+					return response()->json($product, 200);
+				}
+		    }
+		}
+
+		return response()->json(['message' => 'Opps Can\'t create Product'], 400);
 	}
 }
