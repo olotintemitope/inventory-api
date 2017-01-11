@@ -8,5 +8,12 @@ class Category extends Model
 	public function products()
 	{
 		return $this->hasMany('Laztopaz\Model\Product');
-	} 
+	}
+
+	public function scopefindAll($query)
+	{
+		return $query
+		    ->orderBy('id', 'asc')
+		    ->get();
+	}
 }
