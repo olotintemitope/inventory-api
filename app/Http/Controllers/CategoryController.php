@@ -15,13 +15,17 @@ class CategoryController extends Controller
 			return response()->json($categories);
 		}
 
-		return response()->json(['message' => 'Categories not found']);
+		return response()->json(['message' => 'Categories Not Found']);
 	}
 
 	public function getCategory($id)
 	{
 		$category = Category::FindById($id);
 
-		return response()->json($category);
+		if (is_null($category)) {
+			return response()->json($category);
+		}
+
+		return response()->json(['message' => 'Category Not Found']);
 	}
 }
