@@ -38,7 +38,7 @@ class ProductController extends Controller
 			$request->has('quantity') &&
 			$request->has('category')
 		) {
-			$category = Category::FindById($request->has('category'));
+			$category = Category::find($request->has('category'));
 		    if ($category->count() > 0) {
 		    	$product = Product::Create([
 		    		'name' => $request->name,
