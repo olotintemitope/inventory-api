@@ -21,22 +21,3 @@ $factory->define(Laztopaz\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
-
-$factory->define(Laztopaz\Model\Product::class, function (Faker\Generator $faker) {
-
-    return [
-        'name' => $faker->name, 
-        'price' => 200, 
-        'quantity' => 1, 
-        'category_id' => 1
-    ];
-});
-
-
-$factory->define(Laztopaz\Model\Category::class, function (Faker\Generator $faker) {
-
-    return [
-        'name' => $faker->name,
-        'description' => $faker->text
-    ];
-});
