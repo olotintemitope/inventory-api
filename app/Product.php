@@ -12,4 +12,11 @@ class Product extends Model
 	{
 		return $this->belongsTo('Laztopaz\Model\Category');
 	}
+
+	public function scopeFindAll($query)
+	{
+		return $query
+		    ->orderBy('id', 'asc')
+		    ->get();
+	}
 }
