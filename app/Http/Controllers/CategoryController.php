@@ -11,7 +11,11 @@ class CategoryController extends Controller
 	{
 		$categories = Category::findAll();
 
-		return response()->json($categories);
+		if (!is_null($categories)) {
+			return response()->json($categories);
+		}
+
+		return response()->json(['message' => 'Categories not found']);
 	}
 
 	public function getCategory($id)
