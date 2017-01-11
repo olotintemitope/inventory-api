@@ -18,6 +18,6 @@ class CategoryTesr extends TestCase
 
     public function testGetAllCategories()
     {
-    	$response = $this->call('/')
+        $response = $this->call('/')
     }
 }
