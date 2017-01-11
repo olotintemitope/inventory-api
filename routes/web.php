@@ -15,3 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/v1/categories', 'CategoryController@getAllCategories');
