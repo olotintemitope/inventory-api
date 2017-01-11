@@ -28,4 +28,18 @@ class CategoryController extends Controller
 
 		return response()->json(['message' => 'Category Not Found'], 404);
 	}
+
+	public function getProductsByCategory($id)
+	{
+		$category = Category::FindById($id);
+
+		if ($category->count() > 0) {
+			$categoryWithProducts = $category->products();
+			if ($categoryWithProducts->count() > 0) {
+				return response()->json($categoryWithProducts, 200);
+			}
+		}
+
+		return response()->json(['message' => 'Products Not Found'], 404);
+	}
 }
