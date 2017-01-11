@@ -16,4 +16,20 @@ class Category extends Model
 		    ->orderBy('id', 'asc')
 		    ->get();
 	}
+
+	public function scopeFindOneByCategoryId($query, $id)
+	{
+		return $query
+		    ->where('id', $id)
+		    ->first();
+	}
+
+	public function scopeFindProductCategory($query, $catId)
+	{
+		return $query
+		    ->where('id', $id)
+		    ->first()
+		    ->products();
+		    ->get();
+	}
 }
