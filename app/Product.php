@@ -26,4 +26,13 @@ class Product extends Model
 		    ->where('id', $id)
 		    ->first();
 	}
+
+	public function scopeFindOneByCategory($query, $id)
+	{
+		return $query
+		    ->where('id', $id)
+		    ->first()
+		    ->category()
+		    ->get();
+	}
 }
