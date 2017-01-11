@@ -16,30 +16,47 @@ class ProductTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testSeeAddProductPage()
+    public function testGetAllProducts()
     {
-    	$category = factory(Laztopaz\Model\Category::class)->make();
-    	$product = factory(Laztopaz\Model\Product::class)->make();
-    
-    	$this->visit('/products/add')
-    	   ->select(1, 'category')
-    	   ->type($product->name, 'name')
-    	   ->type($product->price, 'price')
-    	   ->type($product->quantity, 'quantity')
-    	   ->press('Add')
-    	   ->seePageIs('/products/view');
+        factory(Laztopaz\Model\Product::class)->make();
+
+        $response = $this->call('GET', '/v1/products');
+
+        $products = json_decode($response->getContent(), true);
+
+        $this->assertGreaterThan(0, count($products));
     }
 
-    public function testViewAllProducts()
+    public function testGetASingleProduct()
     {
-    	$product = factory(Laztopaz\Model\Product::class)->create();
     	$category = factory(Laztopaz\Model\Category::class)->create();
-    	
-    	$this->visit('/products/view')
-    	    ->see($product->name)
-    	    ->see($product->price)
-    	    ->see($product->quantity);
-    	    //->see($category->name);
+        $product = factory(Laztopaz\Model\Product::class)->create();
 
+        $response = $this->call('GET', '/v1/products/'.$product->id);
+
+        $jsonProduct = json_decode($response->getContent(), true);
+
+        $this->assertEquals($product->id, $jsonProduct['id']);
+        $this->assertEquals($product->name, $jsonProduct['name']);
+        $this->assertEquals($product->price, $jsonProduct['price']);
+        $this->assertEquals($product->quantity, $jsonProduct['quantity']);
+        $this->assertGreaterThan(0, count($jsonProduct));
+    }
+
+    public function testCreateProduct()
+    {
+    	$category = factory(Laztopaz\Model\Category::class)->create();
+    	$products = factory(Laztopaz\Model\Category::class, 2)->create();
+
+        $response = $this->call('POST', '/v1/products', [
+        	'category' => $category->id,
+            'name' => 'TimeTable',
+            'price' => 200,
+            'quantity' => 1
+        ]);
+
+        $jsonProduct = json_decode($response->getContent(), true);
+
+        $this->assertGreaterThan(0, count($jsonProduct));
     }
 }
