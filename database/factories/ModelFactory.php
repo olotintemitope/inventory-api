@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -10,14 +9,28 @@
 | database. Just tell the factory how a default model should look.
 |
 */
-
 $factory->define(Laztopaz\User::class, function (Faker\Generator $faker) {
     static $password;
-
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(Laztopaz\Model\Product::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name, 
+        'price' => 200, 
+        'quantity' => 1, 
+        'category_id' => 1
+    ];
+});
+
+$factory->define(Laztopaz\Model\Category::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'description' => $faker->text
     ];
 });
