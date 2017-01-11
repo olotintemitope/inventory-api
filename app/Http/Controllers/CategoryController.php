@@ -31,7 +31,7 @@ class CategoryController extends Controller
 
     public function getProductsByCategory($id)
     {
-        $category = Category::FindById($id);
+        $category = Category::FindOneById($id);
 
         if ($category->count() > 0) {
             $categoryWithProducts = $category->products();
