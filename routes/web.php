@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::get('/v1/categories', 'CategoryController@getAllCategories');
+Route::get('/v1/categories/{id}', 'CategoryController@getCategory');
