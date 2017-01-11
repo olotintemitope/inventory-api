@@ -58,5 +58,4 @@ class CategoryController extends Controller
 
         return response()->json(['message' => 'Opps Can\'t create Category'], 404);
     }
->>>>>>> ft-create-tests
 }

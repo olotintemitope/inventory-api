@@ -44,7 +44,7 @@ class ProductController extends Controller
                     'name' => $request->name,
                     'price' => $request->price,
                     'quantity' => $request->quantity,
-                    'category_id' => $request->quantity,
+                    'category_id' => $request->category,
                 ]);
 
                 if ($product->count() > 0) {
@@ -55,5 +55,4 @@ class ProductController extends Controller
 
         return response()->json(['message' => 'Opps Can\'t create Product'], 400);
     }
->>>>>>> ft-create-tests
 }
