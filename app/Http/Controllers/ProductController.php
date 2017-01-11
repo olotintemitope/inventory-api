@@ -1,57 +1,58 @@
 <?php
+
 namespace Laztopaz\Http\Controllers;
 
-use Laztopaz\Model\Product;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Laztopaz\Model\Product;
 use Laztopaz\Model\Category;
 
 class ProductController extends Controller
 {
-	public function showItemPage(Request $request, Response $response)
-	{
-		$categories = Category::findAll();
-
-		return view('Product.add_product', compact('categories'));
-	}
-
-	public function addItem(Request $request, Response $response)
-	{
-		$product = Product::create([
-			'category_id' => $request->category,
-			'name' => $request->name,
-			'price' => $request->price,
-			'quantity' => $request->quantity
-		]);
-
-		return redirect()->route('list_products'); 
-	}
-
-	public function listProducts(Request $request)
+	public function getAllProducts()
 	{
 		$products = Product::findAll();
 
-		return view('Product.list_products', compact('products'));
-	}
-
-	public function searchProduct(Request $request)
-	{
-		$categories = Category::findAll();
-		$products = [];
-		$category = $request->category;
-		$keyword = $request->search;
-
-		if ($keyword == '') {
-			return view('Product.search_product', compact('categories', 'products'));
+		if ($products->count() > 0) {
+			return response()->json($products);
 		}
 
-		$products = Category::find($category)
-		    ->products()
-		    ->where('name', 'like', '%'.strtolower(urldecode($keyword)).'%')
-		    ->orWhere('price', 'like', '%'.urldecode($keyword).'%')
-		    ->paginate(10);
+		return response()->json(['message' => 'Products Not Found']);
+	}
 
+	public function getProduct($id)
+	{
+		$product = Product::FindOneById($id);
 
-		return view('Product.search_product', compact('categories', 'products'));
+		if ($product->count() > 0) {
+			return response()->json($product);
+		}
+
+		return response()->json(['message' => 'Product Not Found']);
+	}
+
+	public function saveProduct(Request $request)
+	{
+		if (
+			$request->has('name') && 
+			$request->has('price') && 
+			$request->has('quantity') &&
+			$request->has('category')
+		) {
+			$category = Category::find($request->has('category'));
+		    if ($category->count() > 0) {
+		    	$product = Product::Create([
+		    		'name' => $request->name,
+		    		'price' => $request->price,
+		    		'quantity' => $request->quantity,
+		    		'category_id' => $request->quantity,
+				]);
+
+				if ($product->count() > 0) {
+					return response()->json($product, 200);
+				}
+		    }
+		}
+
+		return response()->json(['message' => 'Opps Can\'t create Product'], 400);
 	}
 }

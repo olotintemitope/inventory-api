@@ -20,7 +20,7 @@ class Product extends Model
 		    ->first();
 	}
 
-	public function scopeFindOneByProduct($query, $id)
+	public function scopeFindOneById($query, $id)
 	{
 		return $query
 		    ->where('id', $id)
@@ -31,6 +31,6 @@ class Product extends Model
 	{
 		return $query
 		    ->orderBy('id', 'desc')
-		    ->paginate(20);
+		    ->get();
 	}
 }

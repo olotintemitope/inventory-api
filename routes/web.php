@@ -15,13 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/products/add', 'ProductController@showItemPage')
-    ->name('add_product');
+Route::get('/v1/categories', 'CategoryController@getAllCategories');
+Route::post('/v1/categories', 'CategoryController@saveCategory');
+Route::get('/v1/categories/{id}', 'CategoryController@getCategory');
+Route::get('/v1/categories/{id}/products', 'CategoryController@getProductsByCategory');
 
-Route::get('/products/view', 'ProductController@listProducts')
-    ->name('list_products');
-
-Route::get('/products/search', 'ProductController@searchProduct')
-    ->name('search_products');
-
-Route::post('/create/item', 'ProductController@addItem');
+Route::get('/v1/products', 'ProductController@getAllProducts');
+Route::post('/v1/products', 'ProductController@saveProduct');
+Route::get('/v1/products/{id}', 'ProductController@getProduct');
